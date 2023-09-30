@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "74300359707",
+    "project_id": "play-spots-manager",
+    "storage_bucket": "play-spots-manager.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:74300359707:android:7bb426bd73937b7779e4be",
+        "android_client_info": {
+          "package_name": "com.softfruit.playspotsmanager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6sfGobh1dbBVo6n6jlwtkuzm0-DYGF8w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
