@@ -4,6 +4,8 @@ import * as SplashScreen from "expo-splash-screen";
 import { Redirect } from "expo-router";
 import { useFonts } from "expo-font";
 import messaging from "@react-native-firebase/messaging";
+import * as Crypto from "expo-crypto";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const index = () => {
   const [fontsLoaded] = useFonts({
@@ -23,10 +25,20 @@ const index = () => {
       console.log("Authorization status:", authStatus);
     }
   }
+
+  async function getUDID() {
+    let udId = await AsyncStorage.getItem("ud_id");
+    if (!udId) {
+      udId = Crypto.randomUUID();
+      await AsyncStorage.setItem("ud_id", udId);
+    }
+  }
+
   useEffect(() => {
     async function prepare() {
       await SplashScreen.preventAutoHideAsync();
       await requestUserPermission();
+      await getUDID();
     }
     prepare();
   }, []);
@@ -34,7 +46,7 @@ const index = () => {
     SplashScreen.hideAsync();
   }
 
-  return <View>{fontsLoaded ? <Redirect href={"/auth/"} /> : null}</View>;
+  return <View>{fontsLoaded ? <Redirect href={"/auth/login"} /> : null}</View>;
 };
 
 export default index;

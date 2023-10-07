@@ -6,7 +6,8 @@
       "@components/*": ["src/components/*"],
       "@app/*": ["src/app/*"],
       "@utils/*": ["src/utils/*"],
-      "@constants/*": ["src/constants/*"]
+      "@constants/*": ["src/constants/*"],
+      "@interfaces/*": ["src/interfaces/*"]
       //"@/*": ["src/*"]
     }
   },

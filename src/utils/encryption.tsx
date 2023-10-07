@@ -1,5 +1,4 @@
 import CryptoJS from "crypto-js";
-import CryptoES from "crypto-es";
 
 const salt_secret_key = "Lu70K$i3pu5xf7*I8tNmd@x2oODwwDRr4&xjuyTh";
 const salt_iv = "RUNkk5Xk1DFr16i61EbwdmGNeik9B6lE";
@@ -35,7 +34,7 @@ export const encrypt = (data: string): string => {
     iv: iv_utf8,
     mode: CryptoJS.mode.CBC,
   });
-  const encrypted_base64 = CryptoES.enc.Utf8.parse(encrypted.toString()).toString(CryptoES.enc.Base64)
+  const encrypted_base64 = CryptoJS.enc.Utf8.parse(encrypted.toString()).toString(CryptoJS.enc.Base64)
   console.log(encrypted_base64);
   return encrypted_base64.toString();
 };
