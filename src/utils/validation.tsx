@@ -17,3 +17,13 @@ export function validatePassword(password: string): boolean {
   return passwordPattern.test(password);
 }
 
+export const isValidPhoneNumber = (phoneNumber: string): boolean => {
+  // Define a regular expression pattern for a valid phone number
+  const phonePattern = /^[0-9]{10}$/; // Assumes a 10-digit number without any formatting
+
+  // Remove any non-digit characters (e.g., spaces, dashes, parentheses)
+  const cleanedPhoneNumber = phoneNumber.replace(/\D/g, '');
+
+  // Check if the cleaned phone number matches the pattern
+  return phonePattern.test(cleanedPhoneNumber);
+};

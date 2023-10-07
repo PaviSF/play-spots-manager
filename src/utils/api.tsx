@@ -1,10 +1,11 @@
 import axios, { AxiosResponse } from "axios";
 import TurfDataApiResponse from "@interfaces/TurfData";
+import RegisterResponseData from "@interfaces/Register";
 
 const AUTH_BASE_URL = process.env.EXPO_PUBLIC_AUTH_BASE_URL;
 const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
 
-type OnResponseCallback = (response: AxiosResponse<TurfDataApiResponse, any>) => void;
+type OnResponseCallback = (response: AxiosResponse<TurfDataApiResponse | RegisterResponseData, any>) => void;
 
 export const postData = async (
   url: string,
@@ -22,15 +23,15 @@ export const postData = async (
         "Content-Type": "application/json",
       };
   console.log(baseUrl + url, headers, body, auth, id_required);
-  try {
+  // try {
     console.log("hellooooo");
     await axios
       .post<TurfDataApiResponse>(baseUrl + url, body, {
         headers,
       })
       .then((response) => {console.log(response.data);onResponse(response)});
-  } catch (error) {
-    // Handle any errors here, e.g., network error, server error, etc.
-    console.log("API Request Error:", error);
-  }
+  // } catch (error) {
+  //   // Handle any errors here, e.g., network error, server error, etc.
+  //   console.log("API Request Error:", error);
+  // }
 };

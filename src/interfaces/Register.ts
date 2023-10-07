@@ -1,17 +1,22 @@
-interface RegisterData {
+export interface RegisterData {
     turf_name: string;
     location: string;
     description: string;
     user_name: string;
-    user_email: string;
     user_phone: string;
-    longitude: number;
-    latitude: number;
+    user_email?: string;
   }
 
   export default interface RegisterResponseData {
     status: number;
     message: string;
+  }
+  
+
+  export enum ResponseStatus {
+    TOKEN_EXPIRED = 101,
+    SUCCESS = 1,
+    FAILED = 0,
   }
   
 

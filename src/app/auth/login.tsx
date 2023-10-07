@@ -2,7 +2,7 @@
 import logMessage from "@constants/LogFunction";
 
 // React and React Native imports
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Text,
   SafeAreaView,
@@ -19,14 +19,15 @@ import {
 import { useRouter } from "expo-router";
 
 //Export imports
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import messaging from "@react-native-firebase/messaging";
 import { AxiosResponse } from "axios";
 
 //Internal imports
 import TurfDataApiResponse from "@interfaces/TurfData";
-import { validateUsername } from "@utils/auth";
+import { validateUsername } from "@utils/validation";
 import { postData } from "@utils/api";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ResponseStatus } from "@interfaces/Register";
 
 const Login = () => {
   // State variables for username, password, loading, and router.
@@ -34,7 +35,6 @@ const Login = () => {
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
-
 
   // Function to handle the login process.
   const login = async () => {
@@ -52,7 +52,7 @@ const Login = () => {
     const onResponse = async (
       response: AxiosResponse<TurfDataApiResponse, any>
     ) => {
-      if (response.data.message === "Success") {
+      if (response.data.status === ResponseStatus.SUCCESS) {
         await AsyncStorage.setItem("fcm_id", fcmId);
         Alert.alert("Login success");
         router.push("/booking/");
