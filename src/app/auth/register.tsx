@@ -10,21 +10,17 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  Alert,
   ActivityIndicator,
 } from "react-native";
 
 // Expo imports
 import { useRouter } from "expo-router";
 
-// External imports
-import { AxiosResponse } from "axios";
-
 // Internal imports
 import AlertModal from "@components/AlertModal";
-import { postData } from "@utils/api";
-import { isValidPhoneNumber, validateUsername } from "@utils/validation";
-import RegisterResponseData, { RegisterData } from "@interfaces/Register";
+import { RegisterData } from "@interfaces/Register";
+import Auth from "@actions/auth";
+import styles from "./styles/register.styles";
 
 const Register = () => {
   const router = useRouter();
@@ -50,37 +46,6 @@ const Register = () => {
       ...prevState,
       [field]: text,
     }));
-  };
-
-  const register = async () => {
-    const onResponse = async (
-      response: AxiosResponse<RegisterResponseData, any>
-    ) => {
-      if (response.data.status) {
-        setLoading(false);
-        changeAlertBoxState();
-      } else {
-        Alert.alert(response.data.message);
-        setLoading(false);
-      }
-    };
-
-    // Helper function to set loading state and call the postData function.
-    const initiateAuth = async () => {
-      setLoading(true);
-      await postData(
-        "turf_registration",
-        registerDetails,
-        false,
-        false,
-        onResponse
-      );
-    };
-
-    // Validate the phone number and initiate the register process.
-    isValidPhoneNumber(registerDetails.user_phone)
-      ? initiateAuth()
-      : Alert.alert("Enter a valid phone number");
   };
 
   return (
@@ -121,7 +86,12 @@ const Register = () => {
           numberOfLines={6}
           onChangeText={(text) => handleInputChange("description", text)}
         />
-        <TouchableOpacity style={styles.register} onPress={register}>
+        <TouchableOpacity
+          style={styles.register}
+          onPress={() =>
+            Auth.register(registerDetails, setLoading, changeAlertBoxState)
+          }
+        >
           {loading ? (
             <ActivityIndicator size={25} color={"white"} />
           ) : (
@@ -141,46 +111,4 @@ const Register = () => {
 
 export default Register;
 
-// Styles for the components.
-const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-  },
-  dismissText: {
-    color: "#0985B4",
-    fontSize: 14,
-    textAlign: "right",
-    marginRight: 40,
-    marginTop: 10,
-  },
-  container: {
-    flex: 1,
-    alignItems: "center",
-  },
-  input: {
-    width: "85%",
-    paddingLeft: 15,
-    paddingVertical: 10,
-    borderWidth: 0.3,
-    borderBottomColor: "gray",
-    borderRadius: 13,
-    marginVertical: 6,
-    fontFamily: "Montserrat-Regular",
-  },
-  multilineInput: {
-    textAlignVertical: "top", // Align text to the top in multiline input
-  },
-  register: {
-    width: "85%",
-    backgroundColor: "#009848",
-    borderRadius: 13,
-    alignItems: "center",
-    marginTop: 30,
-    paddingVertical: 12,
-  },
-  registerText: {
-    fontSize: 16,
-    color: "#FFFFFF",
-    fontFamily: "Montserrat-Medium",
-  },
-});
+
