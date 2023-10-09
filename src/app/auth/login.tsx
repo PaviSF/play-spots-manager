@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import {
   Text,
   SafeAreaView,
-  StyleSheet,
   View,
   TextInput,
   Image,
@@ -24,6 +23,11 @@ const Login = () => {
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
+  const login = async () => {
+    setLoading(true);
+    await Auth.login(username,password,router)
+    setLoading(false);
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -51,7 +55,7 @@ const Login = () => {
           Forgot Password?
         </Text>
         {/* Login Button */}
-        <TouchableOpacity style={styles.loginButton} onPress={()=>Auth.login(username, password, setLoading, router)}>
+        <TouchableOpacity style={styles.loginButton} onPress={login}>
           {loading ? (
             <ActivityIndicator size={25} color={"white"} />
           ) : (

@@ -1,6 +1,5 @@
-//export * from '@actions/auth/forgotPassword/forgotPassword'
-import * as login from "@actions/auth/login/userLogin";
-import * as register from "@actions/auth/register/register";
+import login from "@actions/auth/login/userLogin";
+import register from "@actions/auth/register/register";
 
 const Auth = {
   ...login,

@@ -6,7 +6,6 @@ import React, { useState, useRef } from "react";
 import {
   Text,
   SafeAreaView,
-  StyleSheet,
   View,
   TextInput,
   TouchableOpacity,
@@ -48,6 +47,12 @@ const Register = () => {
     }));
   };
 
+  const register = async () => {
+    setLoading(true);
+    await Auth.register(registerDetails, changeAlertBoxState)
+    setLoading(false);
+  }
+
   return (
     <SafeAreaView style={styles.mainContainer}>
       <Text onPress={router.back} style={styles.dismissText}>
@@ -88,9 +93,7 @@ const Register = () => {
         />
         <TouchableOpacity
           style={styles.register}
-          onPress={() =>
-            Auth.register(registerDetails, setLoading, changeAlertBoxState)
-          }
+          onPress={register}
         >
           {loading ? (
             <ActivityIndicator size={25} color={"white"} />
